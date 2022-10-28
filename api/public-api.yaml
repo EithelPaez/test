@@ -1,0 +1,57 @@
+openapi: 3.0.0
+info:
+  description: APIs to cover the requirements for the tests
+  version: 1.0.0
+  title: API TEST
+tags:
+  - name: test-eithel-1
+    description: Test APIs
+paths:
+  /getAvailability:
+    post:
+      operationId: getAvailability
+      summary: Get Availability based on Inventory
+      description: >-
+        Finds availability for a specific inventory requested
+      tags:
+        - find-Availability
+      parameters:
+        - name: productName
+          in: query
+          required: true
+          schema:
+            type: string
+          description: >-
+            Name to be found
+      responses:
+        200:
+          $ref: '#/components/responses/ItemResponse'
+
+components:
+  responses:
+    ItemResponse:
+      description: Contains an Item response for the required search
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ItemMatch'
+
+  schemas:
+    ItemMatch:
+      description: >-
+        Item search schema that contains the Items to be requested
+      properties:
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+    Item:
+      description: Item to be retrieved
+      type: object
+      properties:
+        itemName:
+          description: The name of the Item to be retrieved
+          type: string
+        quantity:
+          description: Ammount availeable for the required item
+          type: number
